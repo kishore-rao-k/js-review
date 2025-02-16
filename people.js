@@ -132,10 +132,41 @@ function findAverage() {
       acc[profession].push(salary);
     }
     return acc;
-  }, [])
-  console.log(acc);
-  return acc;
+
+  }, {})
+  // console.log(acc);
+  let avg = {};
+  for (let profession in acc) {
+    let salaries = acc[profession];
+    let totalSalary = salaries.reduce((sum, salary) => sum + salary, 0);
+    avg[profession] = totalSalary / salaries.length;
+  }
+  return avg;
 }
-findAverage()
+// console.log(findAverage());
 
 // Write a function that returns the youngest and oldest person in each profession.
+
+function youngestAndOldest() {
+  let ageByProfession = people.reduce((acc, curr) => {
+    let profession = curr.profession;
+    if (!acc[profession]) {
+      acc[profession] = [];
+    }
+    acc[profession].push(curr);
+    return acc;
+  }, {})
+
+  let result = {};
+  for (let profession in ageByProfession) {
+    let ages = ageByProfession[profession];
+    let youngest = ages.sort((a, b) => a.age - b.age)[0];
+    let oldest = ages.sort((a, b) => b.age - a.age)[0];
+    result[profession] = {
+      Youngest: { name: youngest.name, age: youngest.age },
+      Oldest: { name: oldest.name, age: oldest.age }
+    };
+  }
+  return result;
+}
+console.log(youngestAndOldest());
